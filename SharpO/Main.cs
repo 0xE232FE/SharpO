@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 
 using SharpO.CSGO;
-using SharpO.CSGO.Valve;
 using SharpO.Hooks;
 
 using System.Collections.Generic;
@@ -29,7 +28,7 @@ namespace SharpO
             {
                 if(args.Name.Contains("Fasm.NET"))
                 {
-                    return Assembly.LoadFrom(@"T:\C#\!Projects\SharpO\SharpO\bin\Release\Fasm.NET.dll");
+                    return Assembly.LoadFrom(@"C:\Users\Admin\Source\Repos\SharpO\SharpO\bin\Release\Fasm.NET.dll");
                 }
 
                 return null;
@@ -38,9 +37,8 @@ namespace SharpO
             DebugHelper.ShowConsoleWindow();
 
             SDK.Init();
-
-            SDK.Engine.ClientCmd_Unrestricted("clear", 0);
-            SDK.Engine.ClientCmd_Unrestricted("echo [C#]", 0);
+            
+            
 
             EngineHook.Init();
 
@@ -57,7 +55,6 @@ namespace SharpO
 
         public delegate void PaintTraverseDlg();
         public delegate void Test();
-        static Test test;
 
         public static void Init()
         {
@@ -67,7 +64,7 @@ namespace SharpO
 
         static unsafe void PaintTraverseHooked()
         {
-            Console.WriteLine($"{SDK.Panel.BaseAdr.ToString("X")}");
+            SDK.Surface.DrawFilledRect(10, 10, 50, 50);
         }
     }
 }
