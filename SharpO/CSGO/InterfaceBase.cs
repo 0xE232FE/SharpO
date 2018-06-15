@@ -35,8 +35,6 @@ namespace SharpO.CSGO
         {
             IntPtr adr = GetInterfaceAddress(index);
             WinAPI.VirtualProtect(adr, 4, (int)WinAPI.Protection.PAGE_EXECUTE_READWRITE, out int kek);
-            Console.WriteLine($"{adr.ToString("X")} {newPtr.ToString("X")}");
-            Console.ReadLine();
             Marshal.WriteIntPtr(adr, newPtr);
         }
     }

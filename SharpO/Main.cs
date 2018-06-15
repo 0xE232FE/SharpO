@@ -61,15 +61,10 @@ namespace SharpO
             hkPaintTraverse = PaintTraverseHooked;
             SDK.Panel.SetInterfacePointer(41, Marshal.GetFunctionPointerForDelegate(hkPaintTraverse));
         }
-        // shit is not working bror fuick
+        // shit is not working bror fuick help me
         static void PaintTraverseHooked(uint vguiPanel, bool forceRepaint, bool allowForce)
         {
-            Console.WriteLine($"Im here {vguiPanel} {forceRepaint} {allowForce}");
-            Console.ReadLine();
-            Console.WriteLine("Kalling PPT");
-            PaintTraverse(vguiPanel, forceRepaint, allowForce);
-            Console.WriteLine("Kalled pt");
-            Console.ReadLine();
+            
         }
     }
 }

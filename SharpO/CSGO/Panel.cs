@@ -10,12 +10,12 @@ namespace SharpO.CSGO
     public class Panel: InterfaceBase
     {
         public delegate void PaintTraverseDlg(IntPtr panelAdr, int vguiPanel, int forceRepaint, int allowForce);
-        public delegate void GetPanelDlg(int type);
-        public delegate void GetNameDlg(uint panel);
+        public delegate int GetPanelDlg(int type);
+        public delegate string GetNameDlg(uint panel);
 
         public PaintTraverseDlg PaintTraverse;
-        GetPanelDlg GetPanel;
-        GetNameDlg GetName;
+        public GetPanelDlg GetPanel;
+        public GetNameDlg GetName;
 
         public Panel(IntPtr baseAdr) : base(baseAdr)
         {
