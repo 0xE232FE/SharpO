@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SharpO
 {
-    public unsafe abstract class Hook
+    public unsafe class Hook
     {
         public IntPtr HookAddress { get; internal set; }
         public IntPtr CallbackAddress { get; internal set; }

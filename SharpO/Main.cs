@@ -26,7 +26,7 @@ namespace SharpO
         {
             AppDomain.CurrentDomain.AssemblyResolve += (object sender, ResolveEventArgs args) =>
             {
-                if(args.Name.Contains("Fasm.NET"))
+                if (args.Name.Contains("Fasm.NET"))
                 {
                     return Assembly.LoadFrom(@"C:\Users\Admin\Source\Repos\SharpO\SharpO\bin\Release\Fasm.NET.dll");
                 }
@@ -37,12 +37,11 @@ namespace SharpO
             DebugHelper.ShowConsoleWindow();
 
             SDK.Init();
-            
-            
-
             EngineHook.Init();
 
-            while(true)
+            //SDK.Surface.DrawLine(0, 0, 100, 100);
+
+            while (true)
             {
                 Console.ReadKey();
             }
@@ -51,20 +50,26 @@ namespace SharpO
 
     public static class EngineHook
     {
-        static PaintTraverseHook HookPT;
+        public delegate void PaintTraverseDlg(uint vguiPanel, bool forceRepaint, bool allowForce);
 
-        public delegate void PaintTraverseDlg();
-        public delegate void Test();
+        static PaintTraverseDlg PaintTraverse;
+        static PaintTraverseDlg hkPaintTraverse;
 
         public static void Init()
         {
-            HookPT = new PaintTraverseHook(SDK.Panel.GetInterfaceFunctionAddress<PaintTraverseDlg>(41), (PaintTraverseDlg)PaintTraverseHooked);
-            HookPT.Hook();
+            PaintTraverse = SDK.Panel.GetInterfaceFunction<PaintTraverseDlg>(41);
+            hkPaintTraverse = PaintTraverseHooked;
+            SDK.Panel.SetInterfacePointer(41, Marshal.GetFunctionPointerForDelegate(hkPaintTraverse));
         }
-
-        static unsafe void PaintTraverseHooked()
+        // shit is not working bror fuick
+        static void PaintTraverseHooked(uint vguiPanel, bool forceRepaint, bool allowForce)
         {
-            SDK.Surface.DrawFilledRect(10, 10, 50, 50);
+            Console.WriteLine($"Im here {vguiPanel} {forceRepaint} {allowForce}");
+            Console.ReadLine();
+            Console.WriteLine("Kalling PPT");
+            PaintTraverse(vguiPanel, forceRepaint, allowForce);
+            Console.WriteLine("Kalled pt");
+            Console.ReadLine();
         }
     }
 }

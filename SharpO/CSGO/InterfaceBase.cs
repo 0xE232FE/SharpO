@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,9 +21,23 @@ namespace SharpO.CSGO
             return Memory.GetFunction<T>(Memory.ReadPointer(Memory.ReadPointer(BaseAdr) + index * 4));
         }
 
-        internal IntPtr GetInterfaceFunctionAddress<T>(int index)
+        internal IntPtr GetInterfaceFunctionAddress(int index)
         {
             return Memory.ReadPointer(Memory.ReadPointer(BaseAdr) + index * 4);
+        }
+
+        internal IntPtr GetInterfaceAddress(int index)
+        {
+            return Memory.ReadPointer(BaseAdr) + index * 4;
+        }
+
+        public void SetInterfacePointer(int index, IntPtr newPtr)
+        {
+            IntPtr adr = GetInterfaceAddress(index);
+            WinAPI.VirtualProtect(adr, 4, (int)WinAPI.Protection.PAGE_EXECUTE_READWRITE, out int kek);
+            Console.WriteLine($"{adr.ToString("X")} {newPtr.ToString("X")}");
+            Console.ReadLine();
+            Marshal.WriteIntPtr(adr, newPtr);
         }
     }
 }
