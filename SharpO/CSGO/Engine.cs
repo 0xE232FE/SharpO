@@ -4,28 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using SharpO.CSGO.Valve;
-
 namespace SharpO.CSGO
 {
     public class Engine: InterfaceBase
     {
-        public delegate int GetLocalPlayerDlg();
+        public delegate void GetScreenSizeDlg(out int width, out int height);
         public delegate void ClientCmd_UnrestrictedDlg(string text, int flags);
-        public delegate void GetViewAnglesDlg(out Vector vector);
-        public delegate void SetViewAngleDlg(Vector vector);
+        public delegate int GetLocalPlayerDlg();
+        //public delegate void GetViewAnglesDlg(out Vector vector);
+        //public delegate void SetViewAngleDlg(Vector vector);
 
+        public GetScreenSizeDlg GetScreenSize;
         public ClientCmd_UnrestrictedDlg ClientCmd_Unrestricted;
         public GetLocalPlayerDlg GetLocalPlayer;
-        public GetViewAnglesDlg GetViewAngles;
-        public SetViewAngleDlg SetViewAngles;
+        //public GetViewAnglesDlg GetViewAngles;
+        //public SetViewAngleDlg SetViewAngles;
 
         public Engine(IntPtr baseAdr) : base(baseAdr)
         {
-            GetLocalPlayer = GetInterfaceFunction<GetLocalPlayerDlg>(12);
+            GetScreenSize = GetInterfaceFunction<GetScreenSizeDlg>(5);
             ClientCmd_Unrestricted = GetInterfaceFunction<ClientCmd_UnrestrictedDlg>(114);
-            GetViewAngles = GetInterfaceFunction<GetViewAnglesDlg>(18);
-            SetViewAngles = GetInterfaceFunction<SetViewAngleDlg>(19);
+            GetLocalPlayer = GetInterfaceFunction<GetLocalPlayerDlg>(12);
+            //GetViewAngles = GetInterfaceFunction<GetViewAnglesDlg>(18);
+            //SetViewAngles = GetInterfaceFunction<SetViewAngleDlg>(19);
         }
     }
 }

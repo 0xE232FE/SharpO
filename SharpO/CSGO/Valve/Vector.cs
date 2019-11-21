@@ -19,6 +19,13 @@ namespace SharpO.CSGO.Valve
             this.Z = z;
         }
 
+        public bool IsZero(float tolerance = 0.01f)
+        {
+            return (X > -tolerance && X < tolerance &&
+                    Y > -tolerance && Y < tolerance &&
+                    Z > -tolerance && Z < tolerance);
+        }
+
         public static bool operator ==(Vector v1, Vector v2)
         {
             return (v1.X == v2.X && v1.Y == v2.Y && v1.Z == v2.Z);
@@ -41,21 +48,21 @@ namespace SharpO.CSGO.Valve
 
         public void Normalize()
         {
-            while(Y > 180)
+            while (Y > 180)
             {
                 Y -= 360;
             }
-            while(Y < -180)
+            while (Y < -180)
             {
                 Y += 360;
             }
 
-            while(X > 89)
+            while (X > 89)
             {
                 X -= 180;
             }
 
-            while(X < -89)
+            while (X < -89)
             {
                 X += 180;
             }
@@ -64,16 +71,6 @@ namespace SharpO.CSGO.Valve
         public override string ToString()
         {
             return $"X: {X}, Y: {Y}, Z:{Z}";
-        }
-
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 
 using SharpO.CSGO;
-using SharpO.CSGO.Valve;
 using SharpO.Hooks;
 
 using System.Collections.Generic;
@@ -27,9 +26,9 @@ namespace SharpO
         {
             AppDomain.CurrentDomain.AssemblyResolve += (object sender, ResolveEventArgs args) =>
             {
-                if(args.Name.Contains("Fasm.NET"))
+                if (args.Name.Contains("Fasm.NET"))
                 {
-                    return Assembly.LoadFrom(@"T:\C#\!Projects\SharpO\SharpO\bin\Release\Fasm.NET.dll");
+                    return Assembly.LoadFrom(@"C:\Users\Admin\Source\Repos\SharpO\SharpO\bin\Release\Fasm.NET.dll");
                 }
 
                 return null;
@@ -38,13 +37,11 @@ namespace SharpO
             DebugHelper.ShowConsoleWindow();
 
             SDK.Init();
-
-            SDK.Engine.ClientCmd_Unrestricted("clear", 0);
-            SDK.Engine.ClientCmd_Unrestricted("echo [C#]", 0);
-
             EngineHook.Init();
 
-            while(true)
+            //SDK.Surface.DrawLine(0, 0, 100, 100);
+
+            while (true)
             {
                 Console.ReadKey();
             }
@@ -53,21 +50,21 @@ namespace SharpO
 
     public static class EngineHook
     {
-        static PaintTraverseHook HookPT;
+        public delegate void PaintTraverseDlg(uint vguiPanel, bool forceRepaint, bool allowForce);
 
-        public delegate void PaintTraverseDlg();
-        public delegate void Test();
-        static Test test;
+        static PaintTraverseDlg PaintTraverse;
+        static PaintTraverseDlg hkPaintTraverse;
 
         public static void Init()
         {
-            HookPT = new PaintTraverseHook(SDK.Panel.GetInterfaceFunctionAddress<PaintTraverseDlg>(41), (PaintTraverseDlg)PaintTraverseHooked);
-            HookPT.Hook();
+            PaintTraverse = SDK.Panel.GetInterfaceFunction<PaintTraverseDlg>(41);
+            hkPaintTraverse = PaintTraverseHooked;
+            SDK.Panel.SetInterfacePointer(41, Marshal.GetFunctionPointerForDelegate(hkPaintTraverse));
         }
-
-        static unsafe void PaintTraverseHooked()
+        // shit is not working bror fuick help me
+        static void PaintTraverseHooked(uint vguiPanel, bool forceRepaint, bool allowForce)
         {
-            Console.WriteLine($"{SDK.Panel.BaseAdr.ToString("X")}");
+            
         }
     }
 }

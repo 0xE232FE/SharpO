@@ -51,6 +51,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -65,6 +66,7 @@
     <Compile Include="CSGO\InterfaceBase.cs" />
     <Compile Include="CSGO\Panel.cs" />
     <Compile Include="CSGO\SDK.cs" />
+    <Compile Include="CSGO\Surface.cs" />
     <Compile Include="CSGO\Valve\Vector.cs" />
     <Compile Include="DebugHelper.cs" />
     <Compile Include="Helper.cs" />
@@ -81,6 +83,7 @@
   <ItemGroup>
     <Content Include="Notes.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="../packages/DllExport.1.5.2/tools/net.r_eg.DllExport.targets" Condition="Exists('../packages/DllExport.1.5.2/tools/net.r_eg.DllExport.targets')" />
   <PropertyGroup>
